@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <title>PT. Once Sejahtera</title>
+        <style>
+            .table-zebra-striping {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-zebra-striping th {
+    background: #8CAAD4;
+    color: #FFFFFF;
+    padding: 1em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.table-zebra-striping td {
+    border-bottom: 1px solid #ddd;
+    padding: 1em;
+}
+
+/* EVEN */
+
+.table-zebra-striping tr:nth-child(even) {
+    background: #F5F5F5;
+}
+
+/* ODD */
+
+.table-zebra-striping tr:nth-child(odd) {
+    background: #D5DDE8;
+}
+
+.kosong {
+    background: red;
+    color:white;
+}
+        </style>
+    </head>
+    <body>
+        <h1>PT. Once Sejahtera</h1>
+        <input type="text" id="nama">
+        <input type="number" id="hari">
+        <select name="kategori" id="kategori">
+            <option value="sosial">Sosial</option>
+            <option value="rumah">Rumah</option>
+            <option value="apartmen">Apartmen</option>
+            <option value="industri">Industri</option>
+            <option value="villa">Villa</option>
+
+        </select>
+        <button onclick="myFunction()">Submit</button>
+        <div id="result"></div>
+        <script>
+            var arrays = [];
+            arrays['sosial'] = {kategori:"Sosial", abodemen:10000, tarif:300, pajak:0};
+            arrays['rumah'] = {kategori:"Rumah", abodemen:30000, tarif:500, pajak:0.1};
+            arrays['apartmen'] = {kategori:"Apartmen", abodemen:50000, tarif:750, pajak:0.15};
+            arrays['industri'] = {kategori:"Industri", abodemen:75000, tarif:1000, pajak:0.2};
+            arrays['villa'] = {kategori:"Villa", abodemen:100000, tarif:1250, pajak:0.25};
+
+            function myFunction() {
+                var nama = document.getElementById("nama").value;
+                var hari = document.getElementById("hari").value;
+                var kategori = document.getElementById("kategori").value;
+                var data = arrays[kategori];
+                var subtotal = (hari*data.tarif)+data.abodemen
+                var pajak = (subtotal*data.pajak)
+                var bayar = subtotal+pajak
+                var html = "<table class='table-zebra-striping'>";
+                    html+="<tr>";
+                    html+="<td>Jumlah</td>";
+                    html+="<td>Tarif per KWH</td>";
+                    html+="<td>Abpdemen</td>";
+                    html+="<td>Subtotal</td>";
+                    html+="</tr>";
+
+                for (let index = 1; index <= hari; index++) {
+                    html+= "<tr>";
+                    html+= "<td>"+index+"</td>";
+                    html+= "<td>"+data.tarif*index+"</td>";
+                    html+= "<td>"+data.abodemen+"</td>";
+                    html+= "<td>"+(data.abodemen+(data.tarif*index))+"</td>";
+                    html+= "</tr>";
+                }
+                html+= "<tr><td colspan='4'> subtotal: "+subtotal+"</td></tr>";
+                html+= "<tr><td colspan='4'> pajak: "+pajak+"</td></tr>";
+                html+= "<tr><td colspan='4'> bayar: "+bayar+"</td></tr>";
+                html+= "</table>";
+
+                document.getElementById("result").innerHTML=html
+            }
+
+        </script>
+    </body>
+</html>
